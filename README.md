@@ -60,12 +60,12 @@ npx playwright install
 
 ## Run Tests
 
-5. Run the complete test suite
+5. Run the complete test suite :
 npm test
 
 6. Run tests in individual browsers:
-npm run test:chromium
-npm run test:firefox
+npm run test:chromium,
+npm run test:firefox,
 npm run test:webkit
 
 ## Test Report
