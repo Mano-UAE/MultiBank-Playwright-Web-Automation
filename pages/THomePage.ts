@@ -1,5 +1,6 @@
 import { Page, expect } from '@playwright/test';
-import aboutUsData from '../testData/testdata/aboutus.json'
+import aboutUsData from '../testData/test-data/aboutus.json'
+import navigationData from '../testData/test-data/navigationData.json'
 
 export class HomePage {
     constructor(private page: Page) {
@@ -19,20 +20,41 @@ export class HomePage {
 
     async verifyNavigationLinks() {
         await this.page.goto('/');
-        const navigationLinks = this.page.locator('header a:visible');
-        const count = await navigationLinks.count();
-        console.log(`Total navigation links: ${count}`);
+
+        await this.page.goto('/');
+
+        const links = this.page.locator('header a:visible');
+        const count = await links.count();
+
+        await expect(count).toBeGreaterThan(0);
+
+        const actualUrls: string[] = [];
+
         for (let i = 0; i < count; i++) {
-            const link = navigationLinks.nth(i);
-            const name = (await link.innerText()).trim();
+            const link = links.nth(i);
             const href = await link.getAttribute('href');
+
             await expect(link).toBeVisible();
-            if (href) {
-                const fullUrl = new URL(href, this.page.url()).href;
-                console.log(`${name} → ${fullUrl}`);
-            }
+            await expect(href, 'Navigation link is missing href').toBeTruthy();
+
+            actualUrls.push(new URL(href!, this.page.url()).href);
         }
+
+        for (const expected of navigationData.navigation) {
+            const expectedUrl = new URL(
+                expected.url,
+                this.page.url()
+            ).href;
+
+            await expect(
+                actualUrls,
+                `Navigation destination missing: ${expected.url}`
+            ).toContain(expectedUrl);
+        }
+
+        console.log('PASS: Expected navigation destinations match live links.');
     }
+
 
     async verifyDesktopNavigation() {
         // 1. Define screen sizes to test
@@ -67,10 +89,10 @@ export class HomePage {
             // 8. Print total link count
             console.log(`Navigation links count: ${count}`);
             // 9. Take screenshot
-            await this.page.screenshot({
-                path: `screenshots/navigation-${viewport.width}x${viewport.height}.png`,
-                fullPage: false,
-            });
+            // await this.page.screenshot({
+            //     path: `screenshots/navigation-${viewport.width}x${viewport.height}.png`,
+            //     fullPage: false,
+            // });
         }
     }
     async verifySpotTradingSection() {
@@ -81,10 +103,10 @@ export class HomePage {
         // Check trading pairs under Trending now component
         const pairs = this.page.locator('xpath=//body/div/div[4]/section[1]/div[2]/div[2]');
         await pairs.scrollIntoViewIfNeeded();
-        expect(pairs).toBeVisible();
-        await pairs.screenshot({
-            path: 'screenshots/trading pairs assertion.png'
-        });
+        await expect(pairs).toBeVisible();
+        // await pairs.screenshot({
+        //     path: 'screenshots/trading pairs assertion.png'
+        // });
     }
     async verifyTradingPairsCategories() {
         //// Verify trading pairs are displayed in the section
@@ -107,12 +129,12 @@ export class HomePage {
         await expect(parent).toBeVisible();
         const entries = parent.locator('a');
         const count = await entries.count();
-        expect(count).toBeGreaterThan(0);
+        await expect(count).toBeGreaterThan(0);
         for (let i = 0; i < count; i++) {
             const entry = entries.nth(i);
             await expect(entry).toBeVisible();
             const details = (await entry.innerText()).replace(/\s+/g, ' ').trim();
-            expect(details).not.toBe('');
+            await expect(details).not.toBe('');
             console.log(`Trading pair ${i + 1}: ${details}`);
         }
     }
@@ -131,7 +153,7 @@ export class HomePage {
         const banner = this.page.getByRole('heading', { name: 'Crypto for everyone' });
         await expect(banner).toBeVisible();
         const position = await banner.boundingBox();
-        expect(position).not.toBeNull();
+        await expect(position).not.toBeNull();
         console.log('Banner reagion', position);
     }
     async verifyAppDownloadLinks() {
@@ -144,12 +166,12 @@ export class HomePage {
 
         // Validate the actual link configured on the website
         const href = await downloadAppLink.getAttribute('href');
-        expect(href).toBeTruthy();
+        await expect(href).toBeTruthy();
 
         const redirectUrl = new URL(href!, this.page.url());
 
-        expect(redirectUrl.hostname).toBe('mbio.go.link');
-        expect(redirectUrl.protocol).toBe('https:');
+        await expect(redirectUrl.hostname).toBe('mbio.go.link');
+        await expect(redirectUrl.protocol).toBe('https:');
 
         console.log('Initial redirect URL:', redirectUrl.href);
 
@@ -159,8 +181,8 @@ export class HomePage {
 
         const appleUrl = new URL(appleStoreUrl);
 
-        expect(appleUrl.hostname).toBe('apps.apple.com');
-        expect(appleUrl.pathname).toBe('/app/id1592119946');
+        await expect(appleUrl.hostname).toBe('apps.apple.com');
+        await expect(appleUrl.pathname).toBe('/app/id1592119946');
 
         console.log('Expected Apple App Store URL:', appleUrl.href);
         console.log('PASS: Redirect link and Apple Store URL validated.');
@@ -189,7 +211,7 @@ export class HomePage {
 
         // COMPARISON: confirms expected headings match live headings
         for (const expectedHeading of aboutUsData.headings) {
-            expect(
+            await expect(
                 liveHeadings,
                 `Missing heading: ${expectedHeading}`
             ).toContain(expectedHeading);
@@ -199,7 +221,7 @@ export class HomePage {
 
         // COMPARISON: confirms expected section text exists in live sections
         for (const expectedText of aboutUsData.sectionTexts) {
-            expect(
+            await expect(
                 liveSectionTexts.some(section => section.includes(expectedText)),
                 `Expected section text not found: ${expectedText}`
             ).toBe(true);
@@ -212,7 +234,7 @@ export class HomePage {
         const status = response?.status();
         console.log('Invalid route status:', status);
         // The invalid route should return a 404 response.
-        expect(status).toBe(404);
+        await expect(status).toBe(404);
         console.log('PASS: Invalid route returns 404.');
     }
 
@@ -254,20 +276,20 @@ export class HomePage {
 
         await this.page.goto('https://mb.io/en-AE');
         const response = await responsePromise;
-        expect(response.status()).toBe(200);
-        expect(response.headers()['content-type']).toContain('application/json');
+        await expect(response.status()).toBe(200);
+        await expect(response.headers()['content-type']).toContain('application/json');
 
         const data = await response.json();
 
-        expect(Array.isArray(data)).toBe(true);
-        expect(data.length).toBeGreaterThan(0);
+        await expect(Array.isArray(data)).toBe(true);
+        await expect(data.length).toBeGreaterThan(0);
         console.log('HTTP Status:', response.status());
         console.log('Content-Type:', response.headers()['content-type']);
         console.log('Response is Array:', Array.isArray(data));
         console.log('Response Count:', data.length);
 
         for (const item of data) {
-            expect(item).toEqual(expect.objectContaining({
+            await expect(item).toEqual(await expect.objectContaining({
                 timestamp: expect.any(Number),
                 base: expect.any(String),
                 quote: expect.any(String),

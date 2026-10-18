@@ -1,0 +1,41 @@
+
+{
+  "navigation": [
+    {
+      "name": "Explore",
+      "url": "/en-AE/explore"
+    },
+    {
+      "name": "Features",
+      "url": "/en-AE/features"
+    },
+    {
+      "name": "OTC Desk",
+      "url": "/en-AE/features/otc-desk"
+    },
+    {
+      "name": "Company",
+      "url": "/en-AE/company"
+    },
+    {
+      "name": "Support",
+      "url": "/en-AE/support"
+    },
+    {
+      "name": "Blog",
+      "url": "/en-AE/blog"
+    },
+    {
+      "name": "$MBG",
+      "url": "https://token.multibankgroup.com/en"
+    },
+    {
+      "name": "Sign in",
+      "url": "https://trade.mb.io/login"
+    },
+    {
+      "name": "Sign up",
+      "url": "https://trade.mb.io/register"
+    }
+  ]
+}
