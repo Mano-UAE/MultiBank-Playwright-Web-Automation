@@ -23,6 +23,7 @@ This project contains automated tests for selected functionality of the public M
 
 ## Project Structure
 
+```
 Trade/
 ├── pages/
 │   ├── THomePage.ts
@@ -39,6 +40,7 @@ Trade/
 ├── tsconfig.json
 ├── .gitignore
 └── README.md
+```
 
 ## How to Run
 
