@@ -46,31 +46,31 @@ Trade/
 
 Make sure Node.js and npm are installed.
 
-Clone the repository and navigate to the project folder:
-
+1. Clone the repository
 git clone https://github.com/Mano-UAE/MultiBank-Playwright-Web-Automation.git
+
+2. Navigate to the project folder
 cd MultiBank-Playwright-Web-Automation
 
-Install the project dependencies and Playwright browsers:
-
+3. Install dependencies
 npm install
+
+4. Install Playwright browsers
 npx playwright install
 
 ## Run Tests
 
-Run the complete test suite:
-
+5. Run the complete test suite
 npm test
 
-Run tests in individual browsers:
-
+6. Run tests in individual browsers:
 npm run test:chromium
 npm run test:firefox
 npm run test:webkit
 
 ## Test Report
 
-After running the tests, open the Playwright HTML report:
+7. View the HTML test report
 
 npm run report
 
