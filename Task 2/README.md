@@ -163,7 +163,7 @@ QA reviews:
 ---
 
 # 4. What Does My Ideal Regression Suite Look Like?
-Three parts, kept small enough to run every time.
+I have split it into three simple parts that are easy to run regularly
 
 ### Smoke Suite (Every Build)
 
@@ -214,8 +214,9 @@ without financial loss, inaccurate balances, or security issues.
 
 ## Scope
 
-**In scope:** Login, KYC, deposits, withdrawals, trading,portfolio, transaction history and mobile reliability.
-**Out of scope:** rFeatures not included in the initial release,long-duration soak testing .
+**In scope:** Login, KYC, deposits, withdrawals, trading, portfolio, transaction history and mobile reliability.
+
+**Out of scope:** Features not included in the initial release,long-duration testing .
 
 
 ### Test Coverage Strategy
