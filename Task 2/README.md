@@ -134,7 +134,7 @@ Login → MFA → Session Management → Authorization
 I follow an Agile approach by reviewing requirements early, prepare test cases, test alongside development, retest fixes, and run regression before release.
 
 ```text
-Requirements Review  → Test Case Creation → Development Testing → Defect Logging & Retesting  Review → Regression → Release Sign-off
+Requirements Review  → Test Case Design → Development Testing → Defect Logging & Retesting → Regression Testing → Release Sign-off
 ```
 
 ### During Refinement
@@ -151,14 +151,14 @@ QA reviews:
 - Create test scenarios
 - Validate APIs
 - Perform exploratory testing
-- Raise defects early
+- Log defects and retest fixes
 
 ### Definition of Done
 
-- Acceptance Criteria Passed
-- Negative Scenarios Tested
-- Regression Impact Assessed
-- No Critical Defects Open
+- Acceptance criteria passed
+- Negative scenarios tested
+- Regression impact sssessed
+- No open critical defects
 
 ---
 
