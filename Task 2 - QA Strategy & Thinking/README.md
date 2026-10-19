@@ -1,4 +1,4 @@
-# QA Strategy & Release Readiness Assessment
+# QA Strategy & Thinking Assessment
 ### Mobile Trading App — iOS & Android
 
 ---
