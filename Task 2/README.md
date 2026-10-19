@@ -25,9 +25,9 @@ Current situation:
 
 The application supports:
 - App supports registration, login/MFA, deposits/withdrawals,buy/sell orders, portfolio, and transaction history.
-- A stable test build ,Test environment, test accounts and APIs are available. Broker/exchange integrations have a sandbox.
+- A stable test build ,Test environment, test accounts and APIs are available. Broker/exchange integrations .
 - Features in scope: registration, KYC, login with MFA, deposit, withdrawal, buy and sell orders, portfolio, transaction history, notifications.
-- Cross-browser: the product is a native mobile app, so I cover cross-device and cross-OS. Any web part (admin panel, webviews) is checked on Chrome, Safari and Firefox with Playwright.
+- Cross-browser: the product is a native mobile app, so I cover cross-device and cross-OS. Any web part (admin panel, UI application views) is checked on Chrome, Safari and Firefox with Playwright.
 
 ---
 
@@ -39,7 +39,7 @@ Two weeks is not enough for exhaustive testing, so I test by risk. I focus where
 
 - **API testing first (Postman).** Order, balance and login logic sits in the backend. API checks are faster and more stable than UI checks, and they catch the serious bugs early.
 - **Small UI automation (Appium)** only for the main journey and smoke. A few stable tests are better than many flaky ones.
-- **Manual and exploratory testing on real devices** for interruptions, biometrics, push notifications 
+- **Manual and exploratory testing on real devices** for interruptions, push notifications 
 
 ### Testing Priority Model
 
@@ -47,7 +47,7 @@ Two weeks is not enough for exhaustive testing, so I test by risk. I focus where
 [ Customer Funds ] → [ Trade Execution ] → [ Security ] → [ Mobile Reliability ] → [ User Experience ]
 ```
 
-For a trading platform, An incorrect trade is a business risk.
+For a trading platform, an incorrect trade is a business risk.
 
 ---
 
@@ -75,7 +75,7 @@ Meet the Product Manager ,Engineering Team to understand:
 ###  Business-Critical Flows
 
 ```text
-Login → Deposit → Buy → Sell → Withdraw → Balance Reconciliation
+Login → Deposit → Buy → Sell → Withdraw → Balance validation
 ```
 
 ### Expected Outcome
@@ -108,8 +108,7 @@ Customer Funds → Trade Execution → Security → Mobile Reliability
 Buy Order → Execution → Portfolio Update
 ```
 
-- Correct quantity
-- Correct price
+- Correct quantity and price
 - No duplicate execution
 - Accurate order status
 
@@ -124,7 +123,6 @@ Login → MFA → Session Management → Authorization
 - Incoming call during trading
 - App restart during transaction
 - Network interruption
-- Background / foreground transition
 
 ---
 
@@ -182,7 +180,7 @@ Launch App → Login → Portfolio → Buy → Sell → Logout
 
 ### Device Regression
 
-**iOS**
+**iOS** 
 - Current Version and Previous Supported Version
 
 **Android**
@@ -196,7 +194,7 @@ Launch App → Login → Portfolio → Buy → Sell → Logout
 2. Balance mismatches  - deposit or withdrawal succeeds, but the balance is incorrect.
 3. Trade Status Mismatch - app shows an order as failed, but the trade actually goes through.
 4. Unauthorized account access - customer can access someone else’s account or funds.
-5. Production Monitoring - issue goes unnoticed until customers complain, with no alerts or quick rollback.
+5. Production Monitoring - issue goes unnoticed until customers complain, with no alerts .
 
 ---
 
@@ -231,7 +229,7 @@ without financial loss, inaccurate balances, or security issues.
 | Mobile | Compatibility + Recovery |
 
 **Entry criteria:** stable build deployed, environment available, test accounts created, release scope finalized.
-**Exit criteria:** no open Critical defects, no open issues on deposits, withdrawals or trading, regression completed.
+**Exit criteria:** no open critical defects, no open issues on deposits, withdrawals or trading, regression completed.
 
 ---
 
